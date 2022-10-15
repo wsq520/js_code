@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+    <input type="text">
+    <button id="cancel">取消</button>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.4/underscore-umd-min.js"></script> -->
+    <!-- <script src="./01.防抖函数.js"></script> -->
+    <!-- <script src="./02.防抖函数-立即执行.js"></script> -->
+    <script src="./03.防抖函数-取消功能.js"></script>
+    <script>
+      const inputel = document.querySelector('input')
+      
+      let count = 1
+      // inputel.oninput = function() {
+      //   console.log(`发送第${count++}次请求`)
+      // }
+
+      const inputChange = function(event) {
+        console.log(`发送第${count++}次请求`)
+        console.log(this)
+        console.log(event)
+      }
+
+      // 使用underscore库实现防抖处理
+      // inputel.oninput = _.debounce(inputChange, 2000)
+
+      // 节流
+      // inputel.oninput = _.throttle(inputChange, 1000)
+
+      // 01版本
+      // inputel.oninput = debounce(inputChange, 2000)
+
+      // 02版本
+      // inputel.oninput = debounce(inputChange, 1500, true)
+
+      // 03版本
+      const debounceChange = debounce(inputChange, 1000)
+      inputel.oninput = debounceChange
+
+      const cancelBtn = document.querySelector('#cancel')
+      cancelBtn.onclick = function() {
+        debounceChange.cancel()
+      }
+    </script>
+</body>
+</html>

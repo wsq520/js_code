@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <input type="text">
+  <button id="cancel">取消</button>
+
+  <!-- <script src="./01.基本实现.js"></script> -->
+  <!-- <script src="./02.节流-leading实现.js"></script> -->
+  <!-- <script src="./03.节流-trailing实现.js"></script> -->
+  <script src="./04.节流-参数.js"></script>
+  <script>
+    const inputel = document.querySelector('input')
+
+    let count = 1
+
+    const inputChange = function (event) {
+      console.log(`发送第${count++}次请求`)
+      console.log(this)
+      console.log(event)
+    }
+    // 01版本
+    // inputel.oninput = throttle(inputChange, 1500)
+
+    // 02版本
+    // inputel.oninput = throttle(inputChange, 1500, { leading: false })
+
+    // 03版本
+    // inputel.oninput = throttle(inputChange, 1500, { leading: true, trailing: true })
+
+    // 04版本
+    const _throttle = throttle(inputChange, 2000, { leading: true, trailing: true })
+    // console.log(_throttle)
+    inputel.oninput = _throttle
+
+    const cancelBtn = document.querySelector('#cancel')
+    cancelBtn.onclick = function() {
+      _throttle.cancel()
+    }
+
+  </script>
+</body>
+
+</html>
